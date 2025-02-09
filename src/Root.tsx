@@ -1,11 +1,12 @@
 import {Outlet} from "react-router";
+import Navbar from "./components/Navbar";
 
 function Root() {
   return (
     <>
-      <h1>Hi</h1>
+      <Navbar />
       <Outlet />
-      <h1>bye</h1>
+      <h1>Footer</h1>
     </>
   );
 }
