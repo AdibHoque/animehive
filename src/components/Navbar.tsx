@@ -11,7 +11,7 @@ import {Link} from "react-router";
 
 const Navbar = () => {
   return (
-    <div className="navbar bg-base-100 shadow-sm">
+    <div className="navbar max-md:bg-base-100 shadow-sm absolute top-0 md:bg-gradient-to-b from-black/60 from-10% via-black/30 to-transparent z-40">
       <div className="navbar-start">
         <div className="drawer w-8 flex justify-center items-center ">
           <input id="my-drawer" type="checkbox" className="drawer-toggle" />
@@ -90,7 +90,7 @@ const Navbar = () => {
           </div>
         </div>
 
-        <div className="flex justify-between gap-8 max-lg:hidden">
+        <div className="flex justify-between gap-6 max-lg:hidden">
           <div className="flex flex-col justify-center items-center">
             <Radio className="text-green-500" />
             <h5 className="text-sm font-medium">Watch2gether</h5>
@@ -99,9 +99,9 @@ const Navbar = () => {
             <Shuffle className="text-green-500" />
             <h5 className="text-sm font-medium">Random</h5>
           </div>
-          <div className="flex flex-col justify-center items-center">
+          <div className="flex flex-col justify-center items-center ">
             <Languages className="text-green-500" />
-            <h5 className="text-sm font-medium">Anime Name</h5>
+            <h5 className="text-sm font-medium">AnimeName</h5>
           </div>
           <div className="flex flex-col justify-center items-center">
             <MessagesSquare className="text-green-500" />
