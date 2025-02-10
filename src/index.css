@@ -2,3 +2,9 @@
 @plugin "daisyui" {
   themes: dark --default, light --prefers-light;
 }
+@import "swiper/css/pagination";
+@import "swiper/css";
+
+.swiper-pagination-bullet-active {
+  background-color: var(--color-green-500) !important;
+}

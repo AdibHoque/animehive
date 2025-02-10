@@ -44,11 +44,30 @@ const Navbar = () => {
               {/* Sidebar content here */}
               <li>
                 <label htmlFor="my-drawer" className="drawer-button">
-                  <a className="flex gap-2 my-4 cursor-pointer hover:text-green-500">
+                  <a className="flex gap-2 my-4 cursor-pointer border-transparent border-2 hover:border-gray-500 py-2 hover:border-2 rounded-3xl">
                     <ChevronLeft />
                     Close Menu
                   </a>
                 </label>
+                <div className="flex justify-between">
+                  <div className="flex flex-col justify-center items-center cursor-pointer">
+                    <Radio className="text-green-500" />
+                    <h5 className="text-sm font-medium">Watch2gether</h5>
+                  </div>
+                  <div className="flex flex-col justify-center items-center cursor-pointer">
+                    <Shuffle className="text-green-500" />
+                    <h5 className="text-sm font-medium">Random</h5>
+                  </div>
+                  <div className="flex flex-col justify-center items-center cursor-pointer">
+                    <Languages className="text-green-500" />
+                    <h5 className="text-sm font-medium">AnimeName</h5>
+                  </div>
+                </div>
+              </li>
+              <li>
+                <a className="flex gap-2 my-4 cursor-pointer  py-2 bg-gray-500/90 font-medium justify-center items-center rounded-3xl">
+                  <MessagesSquare className="text-green-500" /> Community
+                </a>
               </li>
               <li>
                 <a>Sidebar Item 2</a>
