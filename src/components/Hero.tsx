@@ -1,11 +1,20 @@
 import {Swiper, SwiperSlide} from "swiper/react";
 
 import {Autoplay, Navigation, Pagination} from "swiper/modules";
-import HeroSlide from "./HeroSlide";
-import {useRef, useState} from "react";
+import HeroSlide, {SpotlightAnimeData} from "./HeroSlide";
+import {useEffect, useRef, useState} from "react";
 import {ChevronLeft, ChevronRight} from "lucide-react";
 
 const Hero = () => {
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    console.log(`${import.meta.env.VITE_ANIMEHIVE_API}/api/v2/hianime/home`);
+    fetch(`${import.meta.env.VITE_ANIMEHIVE_API}/api/v2/hianime/home`)
+      .then((data) => data.json())
+      .then((data) => setData(data.data.spotlightAnimes));
+  }, []);
+
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [_, setInit] = useState(false);
   const prevRef = useRef(null);
@@ -30,38 +39,13 @@ const Hero = () => {
           modules={[Pagination, Autoplay, Navigation]}
           className="mySwiper w-full"
         >
-          <SwiperSlide className="w-full">
-            <HeroSlide />
-          </SwiperSlide>
-          <SwiperSlide className="w-full">
-            <HeroSlide />
-          </SwiperSlide>
-          <SwiperSlide className="w-full">
-            <HeroSlide />
-          </SwiperSlide>
-          <SwiperSlide className="w-full">
-            <HeroSlide />
-          </SwiperSlide>
-          <SwiperSlide className="w-full">
-            <HeroSlide />
-          </SwiperSlide>
-          <SwiperSlide className="w-full">
-            <HeroSlide />
-          </SwiperSlide>
-          <SwiperSlide className="w-full">
-            <HeroSlide />
-          </SwiperSlide>
-          <SwiperSlide className="w-full">
-            <HeroSlide />
-          </SwiperSlide>
-          <SwiperSlide className="w-full">
-            <HeroSlide />
-          </SwiperSlide>
-          <SwiperSlide className="w-full">
-            <HeroSlide />
-          </SwiperSlide>
+          {data.map((data: SpotlightAnimeData) => (
+            <SwiperSlide className="w-full">
+              <HeroSlide data={data} key={data.id} />
+            </SwiperSlide>
+          ))}
         </Swiper>
-        <div className="flex flex-col absolute bottom-20 right-5 z-10 gap-y-2">
+        <div className="flex flex-col absolute bottom-20 right-5 z-10 gap-y-2 max-md:hidden">
           <button
             ref={prevRef}
             className=" size-10 flex justify-center items-center bg-gray-500/60 rounded-xl"
