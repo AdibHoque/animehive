@@ -3,8 +3,13 @@ import {Link, useLoaderData} from "react-router";
 
 const Anime = () => {
   const anime = useLoaderData();
-  const data = anime.data.anime;
-
+  const data = anime?.data?.anime;
+  if (!data)
+    return (
+      <div className="h-[88vh] flex justify-center w-full items-center">
+        <span className="loader"></span>
+      </div>
+    );
   return (
     <div className="min-h-screen h-screen w-full relative px-2">
       <div
