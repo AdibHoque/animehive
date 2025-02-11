@@ -9,7 +9,6 @@ const Hero = () => {
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    console.log(`${import.meta.env.VITE_ANIMEHIVE_API}/api/v2/hianime/home`);
     fetch(`${import.meta.env.VITE_ANIMEHIVE_API}/api/v2/hianime/home`)
       .then((data) => data.json())
       .then((data) => setData(data.data.spotlightAnimes));

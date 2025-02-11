@@ -7,11 +7,16 @@ import {
   Shuffle,
   Twitter,
 } from "lucide-react";
-import {Link} from "react-router";
+import {Link, useLocation} from "react-router";
 
 const Navbar = () => {
+  const location = useLocation();
   return (
-    <div className="navbar max-md:bg-base-100 shadow-sm absolute top-0 md:bg-gradient-to-b from-black/60 from-10% via-black/30 to-transparent z-40">
+    <div
+      className={`navbar max-md:bg-base-100 shadow-sm ${
+        location.pathname == "/" ? "absolute" : ""
+      } top-0 md:bg-gradient-to-b from-black/60 from-10% via-black/30 to-transparent z-50`}
+    >
       <div className="navbar-start">
         <div className="drawer w-8 flex justify-center items-center ">
           <input id="my-drawer" type="checkbox" className="drawer-toggle" />
@@ -93,7 +98,7 @@ const Navbar = () => {
           <span className="badge badge-neutral badge-sm">Filter</span>
         </label> */}
       </div>
-      <div className="navbar-end flex gap-12">
+      <div className="navbar-end flex gap-8">
         <div className="flex gap-6 ml-6 max-lg:hidden">
           <div className="rounded-full size-8 bg-blue-400 flex justify-center items-center">
             <Twitter className="text-white" fill="#ffffff" />
