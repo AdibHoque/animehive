@@ -18,7 +18,7 @@ const Navbar = () => {
       } top-0 md:bg-gradient-to-b from-black/60 from-10% via-black/30 to-transparent z-50`}
     >
       <div className="navbar-start">
-        <div className="drawer w-8 flex justify-center items-center ">
+        <div className="drawer w-8 flex justify-center items-center z-50">
           <input id="my-drawer" type="checkbox" className="drawer-toggle" />
           <div className="drawer-content">
             {/* Page content here */}
@@ -45,7 +45,7 @@ const Navbar = () => {
               aria-label="close sidebar"
               className="drawer-overlay"
             ></label>
-            <ul className="space-y-2 bg-base-200 text-base-content min-h-full w-80 p-4 opacity-90">
+            <ul className="space-y-2 bg-base-200 text-base-content min-h-full w-80 p-4 opacity-90 ">
               {/* Sidebar content here */}
               <li>
                 <label htmlFor="my-drawer" className="drawer-button">

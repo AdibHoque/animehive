@@ -1,9 +1,68 @@
 import {Mic, Play, Plus, Subtitles} from "lucide-react";
-import {Link, useLoaderData} from "react-router";
+import {useEffect, useState} from "react";
+import {Link, useParams} from "react-router";
+
+export interface AnimeData {
+  info: {
+    id: string;
+    anilistId: number;
+    malId: number;
+    name: string;
+    poster: string;
+    description: string;
+    stats: {
+      type: string;
+      rating: string;
+      quality: string;
+      episodes: {
+        sub: number;
+        dub: number;
+      };
+      duration: string;
+    };
+    promotionalVideos: {
+      title: string;
+      source: string;
+      thumbnail: string;
+    }[];
+    charactersVoiceActors: {
+      character: {
+        id: string;
+        poster: string;
+        name: string;
+        cast: string;
+      };
+      voiceActor: {
+        id: string;
+        poster: string;
+        name: string;
+        cast: string;
+      };
+    }[];
+  };
+  moreInfo: {
+    japanese: string;
+    aired: string;
+    premiered: string;
+    duration: string;
+    status: string;
+    malscore: string;
+    genres: string[];
+    studios: string;
+    producers: string[];
+  };
+}
 
 const Anime = () => {
-  const anime = useLoaderData();
-  const data = anime?.data?.anime;
+  const {id} = useParams();
+  const [data, setData] = useState<AnimeData | null>(null);
+
+  useEffect(() => {
+    fetch(`${import.meta.env.VITE_ANIMEHIVE_API}/api/v2/hianime/anime/${id}`)
+      .then((data) => data.json())
+      .then((data) => setData(data.data.anime));
+  }, [id]);
+
   if (!data)
     return (
       <div className="h-[88vh] flex justify-center w-full items-center">
@@ -20,8 +79,8 @@ const Anime = () => {
           backgroundPosition: "center",
         }}
       ></div>
-      <div className="relative z-10  flex flex-col lg:flex-row gap-10 h-full">
-        <div className="lg:w-3/4 p-10 text-white flex flex-col lg:flex-row items-center lg:items-start gap-x-10 gap-y-6">
+      <div className="relative z-10 flex flex-col lg:flex-row gap-10 h-full">
+        <div className="lg:w-3/4 p-6 lg:p-10 text-white flex flex-col lg:flex-row items-center justify-center lg:items-start gap-x-10 gap-y-6">
           <img
             src={data.info.poster}
             alt="poster"
@@ -37,7 +96,7 @@ const Anime = () => {
                 {data.info.name}
               </p>{" "}
             </div>
-            <h1 className="text-xl md:text-3xl lg:text-4xl font-semibold">
+            <h1 className="text-2xl md:text-3xl lg:text-4xl font-medium">
               {data.info.name}
             </h1>
 
