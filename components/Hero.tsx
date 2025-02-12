@@ -1,5 +1,6 @@
-import {Swiper, SwiperSlide} from "swiper/react";
+"use client";
 
+import {Swiper, SwiperSlide} from "swiper/react";
 import {Autoplay, Navigation, Pagination} from "swiper/modules";
 import HeroSlide, {SpotlightAnimeData} from "./HeroSlide";
 import {useEffect, useRef, useState} from "react";
@@ -26,7 +27,7 @@ const Hero = () => {
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    fetch(`${import.meta.env.VITE_ANIMEHIVE_API}/api/v2/hianime/home`)
+    fetch(`${process.env.NEXT_PUBLIC_ANIMEHIVE_API}/api/v2/hianime/home`)
       .then((data) => data.json())
       .then((data) => setData(data.data.spotlightAnimes));
   }, []);
@@ -63,8 +64,8 @@ const Hero = () => {
           className="mySwiper w-full"
         >
           {data.map((data: SpotlightAnimeData) => (
-            <SwiperSlide className="w-full">
-              <HeroSlide data={data} key={data.id} />
+            <SwiperSlide key={data.id} className="w-full">
+              <HeroSlide data={data} />
             </SwiperSlide>
           ))}
         </Swiper>

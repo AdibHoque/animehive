@@ -1,3 +1,5 @@
+"use client";
+
 import {
   ChevronLeft,
   Languages,
@@ -7,14 +9,15 @@ import {
   Shuffle,
   Twitter,
 } from "lucide-react";
-import {Link, useLocation} from "react-router";
+import Link from "next/link";
+import {usePathname} from "next/navigation";
 
 const Navbar = () => {
-  const location = useLocation();
+  const location = usePathname();
   return (
     <div
       className={`navbar max-md:bg-base-100 shadow-sm ${
-        location.pathname == "/" ? "absolute" : ""
+        location == "/" ? "absolute" : ""
       } top-0 md:bg-gradient-to-b from-black/60 from-10% via-black/30 to-transparent z-50`}
     >
       <div className="navbar-start">
@@ -80,7 +83,7 @@ const Navbar = () => {
             </ul>
           </div>
         </div>
-        <Link to="/">
+        <Link href="/">
           <h2 className="text-2xl lg:text-3xl font-bold px-2 md:px-6 ">
             Anime<span className="text-green-500">Hive</span>
           </h2>

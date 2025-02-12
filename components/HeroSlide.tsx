@@ -1,5 +1,5 @@
 import {Calendar, ChevronRight, Clock, PlayCircle} from "lucide-react";
-import {Link} from "react-router";
+import Link from "next/link";
 
 export interface SpotlightAnimeData {
   rank: number;
@@ -24,7 +24,7 @@ const HeroSlide = ({data}: {data: SpotlightAnimeData}) => {
         backgroundImage: `url(${data.poster})`,
       }}
     >
-      <div className="absolute top-0 hero-overlay bg-gradient-to-r from-base-100 from-10% via-base-100 via-10% to-green-500/5 to-20% z-1 "></div>
+      <div className="absolute top-0 hero-overlay bg-gradient-to-r from-base-200/95 from-5% via-base-100/95 via-10% to-green-500/5 to-20% z-1 "></div>
       <div className="absolute top-0 w-full bg-gradient-to-t from-base-100 from-10% via-transparent to-transparent z-1 h-[80vh] lg:h-screen"></div>
 
       <div className="h-full flex flex-col gap-y-4 md:gap-y-6 items-start justify-end md:justify-center px-4 md:pl-10 md:pr-20 max-w-[42rem] max-md:pb-10 pt-10">
@@ -57,7 +57,7 @@ const HeroSlide = ({data}: {data: SpotlightAnimeData}) => {
             <PlayCircle /> Watch Now
           </button>
           <Link
-            to={`/anime/${data.id}`}
+            href={`/${data.id}`}
             className="btn btn-primary rounded-3xl bg-gray-700 hover:bg-gray-800 border-none shadow-none"
           >
             Detail <ChevronRight />

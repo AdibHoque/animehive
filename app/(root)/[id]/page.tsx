@@ -1,74 +1,15 @@
+import {getAnimeData} from "@/actions/anime.actions";
 import {Mic, Play, Plus, Subtitles} from "lucide-react";
-import {useEffect, useState} from "react";
-import {Link, useParams} from "react-router";
+import Link from "next/link";
 
-export interface AnimeData {
-  info: {
-    id: string;
-    anilistId: number;
-    malId: number;
-    name: string;
-    poster: string;
-    description: string;
-    stats: {
-      type: string;
-      rating: string;
-      quality: string;
-      episodes: {
-        sub: number;
-        dub: number;
-      };
-      duration: string;
-    };
-    promotionalVideos: {
-      title: string;
-      source: string;
-      thumbnail: string;
-    }[];
-    charactersVoiceActors: {
-      character: {
-        id: string;
-        poster: string;
-        name: string;
-        cast: string;
-      };
-      voiceActor: {
-        id: string;
-        poster: string;
-        name: string;
-        cast: string;
-      };
-    }[];
-  };
-  moreInfo: {
-    japanese: string;
-    aired: string;
-    premiered: string;
-    duration: string;
-    status: string;
-    malscore: string;
-    genres: string[];
-    studios: string;
-    producers: string[];
-  };
-}
+type IdProps = Promise<{
+  id: string;
+}>;
 
-const Anime = () => {
-  const {id} = useParams();
-  const [data, setData] = useState<AnimeData | null>(null);
-
-  useEffect(() => {
-    fetch(`${import.meta.env.VITE_ANIMEHIVE_API}/api/v2/hianime/anime/${id}`)
-      .then((data) => data.json())
-      .then((data) => setData(data.data.anime));
-  }, [id]);
-
-  if (!data)
-    return (
-      <div className="h-[88vh] flex justify-center w-full items-center">
-        <span className="loader"></span>
-      </div>
-    );
+const AnimePage = async (props: {params: IdProps}) => {
+  const params = await props.params;
+  const {id} = params;
+  const data = await getAnimeData(id);
   return (
     <div className="min-h-screen h-screen w-full relative px-2">
       <div
@@ -187,7 +128,8 @@ const Anime = () => {
             <span className="font-semibold text-sm">Genres:</span>{" "}
             {data.moreInfo.genres.map((g: string) => (
               <Link
-                to={`/genres/${g}`}
+                key={g}
+                href={`/genres/${g}`}
                 className="btn btn-outline btn-xs rounded-full m-1 border-white/40 font-normal"
               >
                 {g}
@@ -211,4 +153,4 @@ const Anime = () => {
   );
 };
 
-export default Anime;
+export default AnimePage;
