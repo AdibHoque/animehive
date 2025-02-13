@@ -11,8 +11,8 @@
   background-color: var(--color-green-500) !important;
 }
 
-* {
-  font-family: "Poppins", serif !important;
+.font-poppins {
+  font-family: "Poppins", serif;
 }
 
 .loader {
@@ -54,4 +54,13 @@
   100% {
     clip-path: polygon(50% 50%, 0 0, 100% 0, 100% 100%, 0 100%, 0 0);
   }
+}
+
+@font-face {
+  font-family: VideoJS;
+  src: url(/assets/fonts/VideoJS-61a3aebe36c89fc3b5006571532f21c8.woff?h=6e6d4c8a8281293530b07acdd3e57ec0)
+    format("woff");
+  font-weight: 400;
+  font-style: normal;
+  font-display: auto;
 }

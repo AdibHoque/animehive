@@ -53,9 +53,12 @@ const HeroSlide = ({data}: {data: SpotlightAnimeData}) => {
         </p>
 
         <div className="z-2 flex gap-4">
-          <button className="btn btn-primary rounded-3xl bg-green-500 hover:bg-green-700 border-none text-black shadow-none">
+          <Link
+            href={`/watch/${data.id}`}
+            className="btn btn-primary rounded-3xl bg-green-500 hover:bg-green-700 border-none text-black shadow-none"
+          >
             <PlayCircle /> Watch Now
-          </button>
+          </Link>
           <Link
             href={`/${data.id}`}
             className="btn btn-primary rounded-3xl bg-gray-700 hover:bg-gray-800 border-none shadow-none"
