@@ -1,32 +1,70 @@
 "use client";
 
-import React, {useEffect, useRef} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import videojs from "video.js";
 import "video.js/dist/video-js.css";
 
-export const VideoJS = () => {
-  const videoRef = useRef<HTMLVideoElement | null>(null);
+export const VideoJS = ({streamLink}: {streamLink: string}) => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const videoRef = useRef<any>(null);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const playerRef = useRef<any>(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (videoRef.current) {
-      videojs(videoRef.current, {
+    if (!playerRef.current) {
+      const videoElement = document.createElement("video-js");
+
+      videoElement.classList.add("vjs-big-play-centered");
+      videoRef.current.appendChild(videoElement);
+
+      playerRef.current = videojs(videoElement, {
         controls: true,
         autoplay: true,
         responsive: true,
         fluid: true,
         sources: [
           {
-            src: "https://mmd.jonextugundu.net/_v7/2f896774211c473f56639f2a76d52835f5982d8b4bd660be89a64a41b04b563b6084680517e3c7da063c53ce927dcaa21057298efc84147825a9dc68aabff81293bbb8b4e6e8092a8d2ee10e4f385fcf0a95c12a3d364a42678544cd6974b08260b2e698e7e261d32242bf21c9536729c02c7b472d562c3b975aaad3a62f3d7e/master.m3u8",
+            src: streamLink,
             type: "application/x-mpegURL",
           },
         ],
       });
+
+      playerRef.current.on("waiting", () => setLoading(true));
+      playerRef.current.on("canplay", () => setLoading(false));
+      playerRef.current.on("error", () => setLoading(false));
+    } else {
+      const player = playerRef.current;
+      player.autoplay(true);
+      player.src([
+        {
+          src: streamLink,
+          type: "application/x-mpegURL",
+        },
+      ]);
     }
+  }, [streamLink]);
+
+  useEffect(() => {
+    const player = playerRef.current;
+
+    return () => {
+      if (player && !player.isDisposed()) {
+        player.dispose();
+        playerRef.current = null;
+      }
+    };
   }, []);
 
   return (
-    <div data-vjs-player className="w-full">
-      <video ref={videoRef} className="video-js vjs-default-skin" />
+    <div data-vjs-player className="relative w-full">
+      {loading && (
+        <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 z-10">
+          <span className="loader2 opacity-70"></span>
+        </div>
+      )}
+      <div ref={videoRef} />
     </div>
   );
 };

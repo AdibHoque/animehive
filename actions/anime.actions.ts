@@ -23,3 +23,16 @@ export async function getEpisodeData(id: string) {
     return {};
   }
 }
+
+export async function getStreamLink(id: string) {
+  try {
+    const response = await fetch(
+      `${process.env.ANIMEHIVE_API}/api/v2/hianime/episode/sources?animeEpisodeId=${id}server=hd-1&category=dub`
+    );
+    const jsonData = await response.json();
+    return jsonData.data || {};
+  } catch (error) {
+    console.error("Error fetching anime episode data:", error);
+    return {};
+  }
+}
