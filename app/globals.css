@@ -106,3 +106,20 @@
     box-shadow: 0 2.5em 0 0;
   }
 }
+
+/* Change all text and icon colors in the player. */
+.vjs-matrix.video-js {
+  color: var(--color-green-500);
+}
+
+/* Change the border of the big play button. */
+.vjs-matrix .vjs-big-play-button {
+  border-color: var(--color-green-500);
+}
+
+/* Change the color of various "bars". */
+.vjs-matrix .vjs-volume-level,
+.vjs-matrix .vjs-play-progress,
+.vjs-matrix .vjs-slider-bar {
+  background: var(--color-green-500);
+}

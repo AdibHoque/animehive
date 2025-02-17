@@ -4,7 +4,13 @@ import React, {useEffect, useRef, useState} from "react";
 import videojs from "video.js";
 import "video.js/dist/video-js.css";
 
-export const VideoJS = ({streamLink}: {streamLink: string}) => {
+export const VideoJS = ({
+  streamLink,
+  tracks,
+}: {
+  streamLink: string;
+  tracks: {file: string; label: string; kind: string; default: boolean}[];
+}) => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const videoRef = useRef<any>(null);
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -15,7 +21,7 @@ export const VideoJS = ({streamLink}: {streamLink: string}) => {
     if (!playerRef.current) {
       const videoElement = document.createElement("video-js");
 
-      videoElement.classList.add("vjs-big-play-centered");
+      videoElement.classList.add("vjs-matrix");
       videoRef.current.appendChild(videoElement);
 
       playerRef.current = videojs(videoElement, {
@@ -29,7 +35,26 @@ export const VideoJS = ({streamLink}: {streamLink: string}) => {
             type: "application/x-mpegURL",
           },
         ],
+        tracks: tracks
+          .filter((t) => t.kind == "captions")
+          .map((subtitle) => ({
+            kind: "subtitles",
+            label: subtitle.label,
+            src: subtitle.file,
+            srclang: "en",
+          })),
       });
+
+      console.log(
+        tracks
+          .filter((t) => t.kind == "captions")
+          .map((subtitle) => ({
+            kind: "subtitles",
+            label: subtitle.label,
+            src: subtitle.file,
+            srclang: "en",
+          }))
+      );
 
       playerRef.current.on("waiting", () => setLoading(true));
       playerRef.current.on("canplay", () => setLoading(false));
