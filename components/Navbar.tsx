@@ -135,7 +135,7 @@ const Navbar = () => {
             <h5 className="text-sm font-medium">Community</h5>
           </div>
         </div>
-        <a className="btn bg-green-500 font-bold rounded-lg text-black">
+        <a className="btn max-md:btn-sm bg-green-500 font-bold rounded-lg text-black">
           Login
         </a>
       </div>

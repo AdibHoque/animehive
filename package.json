@@ -17,15 +17,13 @@
     "next": "15.1.7",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "swiper": "^11.2.2",
-    "video.js": "^8.21.0"
+    "swiper": "^11.2.2"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
-    "@types/video.js": "^7.3.58",
     "eslint": "^9",
     "eslint-config-next": "15.1.7",
     "postcss": "^8.5.2",

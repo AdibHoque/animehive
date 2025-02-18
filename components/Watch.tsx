@@ -31,12 +31,21 @@ const Watch = ({data, name}: {data: Episodes; name: string}) => {
     }
   }, []);
 
-  const handleEpisodeClick = (episodeId: string) => {
+  const handleEpisodeClick = (
+    episodeId: string,
+    serv?: "hd-1" | "hd-2",
+    cate?: "dub" | "sub"
+  ) => {
+    setStreamLink("");
     setSelectedEpisode(episodeId);
     setLoadingEpisode(episodeId);
 
     fetch(
-      `${process.env.NEXT_PUBLIC_ANIMEHIVE_API}/api/v2/hianime/episode/sources?animeEpisodeId=${episodeId}server=${server}&category=${category}`
+      `${
+        process.env.NEXT_PUBLIC_ANIMEHIVE_API
+      }/api/v2/hianime/episode/sources?animeEpisodeId=${episodeId}server=${
+        serv ? serv : server
+      }&category=${cate ? cate : category}`
     )
       .then((res) => res.json())
       .then((data) => {
@@ -54,11 +63,11 @@ const Watch = ({data, name}: {data: Episodes; name: string}) => {
   const handleServer = (server: "hd-1" | "hd-2", category: "sub" | "dub") => {
     setServer(server);
     setCategory(category);
-    handleEpisodeClick(selectedEpisode);
+    handleEpisodeClick(selectedEpisode, server, category);
   };
 
   return (
-    <div className="p-4 lg:p-10 relative">
+    <div className="p-4 lg:p-10 relative max-lg:bg-black">
       <div className="hidden xl:flex items-center gap-2 absolute top-[8px]">
         <p className="text-sm font-light">Home</p>{" "}
         <div className="rounded-full bg-white/60 size-1"></div>
@@ -68,7 +77,7 @@ const Watch = ({data, name}: {data: Episodes; name: string}) => {
       </div>
 
       <div className="w-full flex flex-col-reverse xl:flex-row">
-        <div className="w-full xl:w-[25%] h-screen">
+        <div className="w-full xl:w-[25%] h-screen max-lg:border-y max-lg:border-dashed border-gray-600">
           <div className="p-4 flex w-full gap-2 items-center bg-base-300 justify-between">
             <p className="font-medium text-xs">List of Episodes:</p>
             <label className="input-sm input w-[10rem]">
@@ -91,7 +100,7 @@ const Watch = ({data, name}: {data: Episodes; name: string}) => {
               <input type="search" required placeholder="Number of Ep" />
             </label>
           </div>
-          <div className="h-full bg-base-200 p-2 overflow-y-auto">
+          <div className="h-full bg-base-200 p-2 overflow-y-auto  ">
             <div className="grid grid-cols-6 sm:grid-cols-8 md:grid-cols-10 lg:grid-cols-12 xl:grid-cols-5 gap-1">
               {data.episodes.slice(0, 100).map((ep) => (
                 <button
@@ -113,11 +122,13 @@ const Watch = ({data, name}: {data: Episodes; name: string}) => {
             </div>
           </div>
         </div>
-        <div className="w-full xl:w-3/4 xl:h-screen h-full">
+        <div className="w-full xl:w-3/4 xl:h-screen h-full ">
           {streamLink !== "" ? (
             <Player streamLink={streamLink} tracks={tracks} name={name} />
           ) : (
-            <div className="bg-black w-full h-[60vh]"></div>
+            <div className="bg-black w-full h-full min-h-[40vh] flex items-center justify-center">
+              <span className="loader2 opacity-70"></span>
+            </div>
           )}
           <div className="h-full lg:max-h-[136px]">
             <div className="flex justify-between items-center px-2 text-xs md:text-sm my-2">
@@ -134,7 +145,7 @@ const Watch = ({data, name}: {data: Episodes; name: string}) => {
                   Auto Next
                   <span className="font-medium text-green-500">{"  "}Off</span>
                 </p>
-                <p className="font-light">
+                <p className="font-light max-md:hidden">
                   Auto Skip Intro
                   <span className="font-medium text-green-500">{"  "}Off</span>
                 </p>
@@ -184,7 +195,7 @@ const Watch = ({data, name}: {data: Episodes; name: string}) => {
                     HD-2
                   </button>
                 </div>
-                <hr className="border-dotted opacity-20 my-2" />
+                <hr className="border-dashed opacity-20 my-3" />
                 <div className="flex gap-4">
                   <h3 className="text-xs md:text-sm font-semibold flex gap-2 items-center">
                     <Mic /> DUB:

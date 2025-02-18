@@ -1,5 +1,6 @@
 import {getAnimeData} from "@/actions/anime.actions";
 import {Mic, Play, Plus, Subtitles} from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 
 type IdProps = Promise<{
@@ -22,10 +23,12 @@ const AnimePage = async (props: {params: IdProps}) => {
       ></div>
       <div className="relative z-10 flex flex-col lg:flex-row gap-10 h-full">
         <div className="lg:w-3/4 p-6 lg:p-10 text-white flex flex-col lg:flex-row items-center justify-center lg:items-start gap-x-10 gap-y-6">
-          <img
+          <Image
             src={data.info.poster}
             alt="poster"
             className="max-h-[250px] max-w-[180px]"
+            height={250}
+            width={180}
           />
           <div className="flex flex-col gap-y-6 items-center lg:items-start">
             <div className="flex items-center gap-2">
@@ -67,9 +70,12 @@ const AnimePage = async (props: {params: IdProps}) => {
             </div>
 
             <div className="z-2 flex gap-2">
-              <button className="btn btn-primary rounded-3xl bg-green-500 hover:bg-green-700 border-none text-black shadow-none">
+              <Link
+                href={`/watch/${data.info.id}`}
+                className="btn btn-primary rounded-3xl bg-green-500 hover:bg-green-700 border-none text-black shadow-none"
+              >
                 <Play fill="#111111" /> Watch Now
-              </button>
+              </Link>
               <button className="btn btn-primary rounded-3xl bg-white hover:bg-gray-300 text-black border-none shadow-none">
                 <Plus /> Add to List
               </button>

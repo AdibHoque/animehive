@@ -123,3 +123,7 @@
 .vjs-matrix .vjs-slider-bar {
   background: var(--color-green-500);
 }
+
+.plyr--full-ui {
+  --plyr-color-main: var(--color-green-500);
+}

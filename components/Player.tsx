@@ -31,19 +31,21 @@ const Player = ({streamLink, tracks, name}: VideoJSProps) => {
   useEffect(() => {
     setPlayerKey(playerKey + 1);
     setLoading(true);
-    const timeout = setTimeout(() => setLoading(false), 1000);
-
-    return () => clearTimeout(timeout);
   }, [streamLink]);
 
   return (
-    <div className="w-full relative">
+    <div className="w-full relative ">
       {loading && (
         <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 z-10">
           <span className="loader2 opacity-70"></span>
         </div>
       )}
-      <MediaPlayer autoPlay={true} title={name} src={streamLink}>
+      <MediaPlayer
+        autoPlay={true}
+        title={name}
+        src={streamLink}
+        onLoadedData={() => setLoading(false)}
+      >
         <MediaProvider>{tracks[0]?.file && subtitleTracks}</MediaProvider>
         <PlyrLayout
           thumbnails={
