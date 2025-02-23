@@ -1,6 +1,8 @@
 import {getEpisodeData} from "@/actions/anime.actions";
-import Watch from "@/components/Watch";
-import React from "react";
+import WatchSkeleton from "@/components/WatchSkeleton";
+import dynamic from "next/dynamic";
+import React, {Suspense} from "react";
+const Watch = dynamic(() => import("@/components/Watch"));
 
 type IdProps = Promise<{
   id: string;
@@ -16,7 +18,11 @@ const WatchPage = async (props: {params: IdProps}) => {
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
     .join(" ");
 
-  return <Watch data={data} name={name} />;
+  return (
+    <Suspense fallback={<WatchSkeleton />}>
+      <Watch data={data} name={name} />
+    </Suspense>
+  );
 };
 
 export default WatchPage;

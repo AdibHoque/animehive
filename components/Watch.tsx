@@ -76,7 +76,7 @@ const Watch = ({data, name}: {data: Episodes; name: string}) => {
         <p className="text-sm font-light opacity-50">{name}</p>
       </div>
 
-      <div className="w-full flex flex-col-reverse xl:flex-row">
+      <div className="w-full flex flex-col-reverse xl:flex-row gap-x-4">
         <div className="w-full xl:w-[25%] h-screen max-lg:border-y max-lg:border-dashed border-gray-600">
           <div className="p-4 flex w-full gap-2 items-center bg-base-300 justify-between">
             <p className="font-medium text-xs">List of Episodes:</p>
@@ -159,7 +159,7 @@ const Watch = ({data, name}: {data: Episodes; name: string}) => {
             </div>
 
             <div className="w-full flex flex-col lg:flex-row xl:p-2">
-              <div className="w-full lg:w-1/4 rounded-l-lg max-xl:rounded-bl-none bg-green-500  font-semibold text-base-200  p-2 flex flex-col justify-center items-center text-center text-xs">
+              <div className="w-full lg:w-1/4 rounded-l-lg rounded-tr-lg max-xl:rounded-tr-none max-xl:rounded-bl-none bg-green-500  font-semibold text-base-200  p-2 flex flex-col justify-center items-center text-center text-xs">
                 <p>You are watching</p>
                 <p className="font-bold my-2">
                   Episode{" "}
