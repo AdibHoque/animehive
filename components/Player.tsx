@@ -36,8 +36,8 @@ const Player = ({streamLink, tracks, name}: VideoJSProps) => {
   return (
     <div className="w-full relative ">
       {loading && (
-        <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 z-10">
-          <span className="loader2 opacity-70"></span>
+        <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/50 bg-opacity-50 z-10">
+          <span className="loader2 opacity-70 -mt-10"></span>
         </div>
       )}
       <MediaPlayer
@@ -45,6 +45,8 @@ const Player = ({streamLink, tracks, name}: VideoJSProps) => {
         title={name}
         src={streamLink}
         onLoadedData={() => setLoading(false)}
+        onWaiting={() => setLoading(true)}
+        onPlaying={() => setLoading(false)}
       >
         <MediaProvider>{tracks[0]?.file && subtitleTracks}</MediaProvider>
         <PlyrLayout

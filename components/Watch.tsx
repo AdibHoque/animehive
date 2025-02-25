@@ -22,6 +22,12 @@ const Watch = ({data, name}: {data: Episodes; name: string}) => {
   const [category, setCategory] = useState<"dub" | "sub">("dub");
   const [server, setServer] = useState<"hd-1" | "hd-2">("hd-1");
 
+  const [selectedRange, setSelectedRange] = useState(0);
+  const totalRanges = Math.ceil(data.totalEpisodes / 100);
+  const start = selectedRange * 100;
+  const end = Math.min(start + 100, data.totalEpisodes);
+  const episodesToShow = data.episodes.slice(start, end);
+
   useEffect(() => {
     const lastClick = localStorage.getItem(name);
     if (lastClick) {
@@ -77,32 +83,54 @@ const Watch = ({data, name}: {data: Episodes; name: string}) => {
       </div>
 
       <div className="w-full flex flex-col-reverse xl:flex-row gap-x-4">
+        {/* ep */}
         <div className="w-full xl:w-[25%] h-screen max-lg:border-y max-lg:border-dashed border-gray-600">
           <div className="p-4 flex w-full gap-2 items-center bg-base-300 justify-between">
             <p className="font-medium text-xs">List of Episodes:</p>
-            <label className="input-sm input w-[10rem]">
-              <svg
-                className="h-[1em]"
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
+            {data.totalEpisodes > 100 ? (
+              <select
+                className="select w-[10rem] dropdown-bottom"
+                value={selectedRange}
+                onChange={(e) => setSelectedRange(Number(e.target.value))}
               >
-                <g
-                  strokeLinejoin="round"
-                  strokeLinecap="round"
-                  strokeWidth="2.5"
-                  fill="none"
-                  stroke="currentColor"
+                {Array.from({length: totalRanges}).map((_, index) => {
+                  const rangeStart = index * 100 + 1;
+                  const rangeEnd = Math.min(
+                    (index + 1) * 100,
+                    data.totalEpisodes
+                  );
+                  return (
+                    <option key={index} value={index}>
+                      Episodes {rangeStart}-{rangeEnd}
+                    </option>
+                  );
+                })}
+              </select>
+            ) : (
+              <label className="input-sm input w-[10rem]">
+                <svg
+                  className="h-[1em]"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
                 >
-                  <circle cx="11" cy="11" r="8"></circle>
-                  <path d="m21 21-4.3-4.3"></path>
-                </g>
-              </svg>
-              <input type="search" required placeholder="Number of Ep" />
-            </label>
+                  <g
+                    strokeLinejoin="round"
+                    strokeLinecap="round"
+                    strokeWidth="2.5"
+                    fill="none"
+                    stroke="currentColor"
+                  >
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <path d="m21 21-4.3-4.3"></path>
+                  </g>
+                </svg>
+                <input type="search" required placeholder="Number of Ep" />
+              </label>
+            )}
           </div>
           <div className="h-full bg-base-200 p-2 overflow-y-auto  ">
             <div className="grid grid-cols-6 sm:grid-cols-8 md:grid-cols-10 lg:grid-cols-12 xl:grid-cols-5 gap-1">
-              {data.episodes.slice(0, 100).map((ep) => (
+              {episodesToShow.map((ep) => (
                 <button
                   key={ep.episodeId}
                   onClick={() => handleEpisodeClick(ep.episodeId)}
@@ -159,10 +187,10 @@ const Watch = ({data, name}: {data: Episodes; name: string}) => {
             </div>
 
             <div className="w-full flex flex-col lg:flex-row xl:p-2">
-              <div className="w-full lg:w-1/4 rounded-l-lg rounded-tr-lg max-xl:rounded-tr-none max-xl:rounded-bl-none bg-green-500  font-semibold text-base-200  p-2 flex flex-col justify-center items-center text-center text-xs">
+              <div className="w-full lg:w-1/4 rounded-l-lg rounded-tr-lg lg:rounded-tr-none max-xl:rounded-bl-none bg-green-500  font-semibold text-base-200  p-2 flex flex-col justify-center items-center text-center text-xs">
                 <p>You are watching</p>
                 <p className="font-bold my-2">
-                  Episode{" "}
+                  {name.slice(0, 14)} - Episode{" "}
                   {
                     data?.episodes?.find((a) => a.episodeId == selectedEpisode)
                       ?.number

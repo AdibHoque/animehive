@@ -127,3 +127,14 @@
 .plyr--full-ui {
   --plyr-color-main: var(--color-green-500);
 }
+
+.search {
+  transform: translateY(-20px);
+  opacity: 0;
+  transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+}
+
+.search-active {
+  transform: translateY(0);
+  opacity: 1;
+}
